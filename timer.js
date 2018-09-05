@@ -131,8 +131,6 @@ function loadSettings() {
     for (let i = 0; i < voiceOptions.length; i++)
         if (voiceOptions.item(i).value === settings.voice)
             el('voices').selectedIndex = i;
-    log("loaded settings: ");
-    log(JSON.stringify(settings));
 }
 
 window.onload = () => {

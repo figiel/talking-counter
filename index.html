@@ -2,47 +2,53 @@
 <head>
 <title>Talking Counter</title>
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script type="application/javascript" src="timer.js"></script>
-
 </head>
 
-<body>
-<h1>Talking Counter</h1>
+<body style="padding: 10pt">
 
-<div id="timerSetUp">
-    <div>
-        <label for="mode">Counting mode:</label>
-        <select id="mode">
-            <option>Count up</option>
-            <option>Count down</option>
-        </select>
+<div class="container">
+    <div class="row">
+        <h1>Talking Counter</h1>
     </div>
-    <div>
-        <label for="repetitions">Repetitions:</label>
-        <input type="number" id="repetitions" min="1">
-    </div>
-    <div>
-        <label for="delay">Delay in seconds between repetitions:</label>
-        <input type="number" id="delay" min="0">
-    </div>
-    <div>
-        <label for="preDelay">Delay in seconds before first repetition:</label>
-        <input type="number" id="preDelay" min="0">
-    </div>
-    <div>
-        <label for="voices">Voice</label>
-        <select id="voices"></select>
-    </div>
-</div>
 
-<div id="buttons">
-    <div>
-        <button id="start" type="button" disabled>Start</button>
-        <button id="stop" type="button" disabled>Stop</button>
-    </div>
-</div>
+    <form id="timerSetUp" class="form-horizontal">
+        <div class="form-group">
+            <label for="mode">Counting mode:</label>
+            <select id="mode" class="form-control">
+                <option>Count up</option>
+                <option>Count down</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="repetitions">Repetitions:</label>
+            <input type="number" id="repetitions" min="1" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="delay">Delay in seconds between repetitions:</label>
+            <input type="number" id="delay" min="0" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="preDelay">Delay in seconds before first repetition:</label>
+            <input type="number" id="preDelay" min="0" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="voices">Voice</label>
+            <select id="voices" class="form-control"></select>
+        </div>
+        <div id="buttons" class="form-group">
+            <div>
+                <button id="start" type="button" class="btn btn-default" disabled>Start</button>
+                <button id="stop" type="button" class="btn btn-default" disabled>Stop</button>
+            </div>
+        </div>
+    </form>
 
-<div id="debugConsole">
+    <div id="debugConsole" class="row">
+    </div>
 </div>
 
 </body>

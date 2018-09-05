@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Talking Counter</title>
+<meta charset="utf-8">
+<script type="application/javascript" src="timer.js"></script>
+
+</head>
+
+<body>
+<h1>Talking Counter</h1>
+
+<div id="timerSetUp">
+    <div>
+        <label for="mode">Counting mode:</label>
+        <select id="mode">
+            <option>Count up</option>
+            <option>Count down</option>
+        </select>
+    </div>
+    <div>
+        <label for="repetitions">Repetitions:</label>
+        <input type="number" id="repetitions" min="1">
+    </div>
+    <div>
+        <label for="delay">Delay in seconds between repetitions:</label>
+        <input type="number" id="delay" min="0">
+    </div>
+    <div>
+        <label for="preDelay">Delay in seconds before first repetition:</label>
+        <input type="number" id="preDelay" min="0">
+    </div>
+    <div>
+        <label for="voices">Voice</label>
+        <select id="voices"></select>
+    </div>
+</div>
+
+<div id="buttons">
+    <div>
+        <button id="start" type="button" disabled>Start</button>
+        <button id="stop" type="button" disabled>Stop</button>
+    </div>
+</div>
+
+<div id="debugConsole">
+</div>
+
+</body>
+
+</html>

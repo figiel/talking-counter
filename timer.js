@@ -6,6 +6,7 @@ const settingsVersion = 1;
 let currentTimer = null;
 let synth = window.speechSynthesis;
 let synthVoices = synth.getVoices();
+let nosleep = new NoSleep();
 
 function log(t) {
     el('debugConsole').innerText = t + '\n' + el('debugConsole').innerText;
@@ -74,6 +75,9 @@ function updateUi() {
     let timerIsRunning = currentTimer != null;
     el('start').disabled = timerIsRunning;
     el('stop').disabled = !timerIsRunning;
+    if (!timerIsRunning) {
+        nosleep.disable();
+    }
 }
 
 function startTalkingTimer() {
@@ -82,6 +86,7 @@ function startTalkingTimer() {
     saveSettings();
     currentTimer = getNewTimer();
     setTimeout(timerTick, currentTimer.preDelay, currentTimer);
+    nosleep.enable();
     updateUi();
 }
 

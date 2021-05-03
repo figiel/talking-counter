@@ -5,7 +5,7 @@ const settingsVersion = 1;
 
 let currentTimer = null;
 let synth = window.speechSynthesis;
-let voices = synth.getVoices();
+let synthVoices = synth.getVoices();
 
 function log(t) {
     el('debugConsole').innerText = t + '\n' + el('debugConsole').innerText;
@@ -27,7 +27,7 @@ function getNewTimer() {
         delay: parseInt(el('delay').value) * msecsInSecond,
         mode: el('mode').selectedIndex === 0 ? timerModeUp : timerModeDown,
         preDelay: parseInt(el('preDelay').value) * msecsInSecond,
-        voice: voices[el('voices').selectedIndex],
+        voice: synthVoices[el('voices').selectedIndex],
         stop: false,
         count: 0
     };
@@ -94,11 +94,11 @@ function stopTalkingTimer() {
 }
 
 function populateVoices() {
-    for (let i = 0; i < voices.length; i++) {
+    for (let i = 0; i < synthVoices.length; i++) {
         let e = document.createElement("option");
-        e.textContent = voices[i].name + ' [' + voices[i].lang + ']';
+        e.textContent = synthVoices[i].name + ' [' + synthVoices[i].lang + ']';
         el('voices').appendChild(e);
-        if (voices[i].default)
+        if (synthVoices[i].default)
             el('voices').selectedIndex = i;
     }
 }

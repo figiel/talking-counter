@@ -74,9 +74,20 @@ function timerTick(timerState) {
 function updateUi() {
     let timerIsRunning = currentTimer != null;
     el('start').disabled = timerIsRunning;
+    el('startPreset').disabled = el('start').disabled;
     el('stop').disabled = !timerIsRunning;
-    if (!timerIsRunning) {
+    if (!timerIsRunning && nosleep.isEnabled) {
         nosleep.disable();
+    }
+    let presets = JSON.parse(window.localStorage.getItem('presets') || "{}");
+    el('presetOptions').innerHTML='';
+    for (let preset in presets) {
+        if (!presets.hasOwnProperty(preset)) {
+            continue;
+        }
+        let new_option = document.createElement('option');
+        new_option.value = preset;
+        el('presetOptions').appendChild(new_option);
     }
 }
 
@@ -108,8 +119,8 @@ function populateVoices() {
     }
 }
 
-function saveSettings() {
-    let settings  = {
+function getSettings() {
+    return {
         version: settingsVersion,
         repetitions: parseInt(el('repetitions').value),
         delay: parseInt(el('delay').value),
@@ -117,14 +128,15 @@ function saveSettings() {
         preDelay: parseInt(el('preDelay').value),
         /* voice is stored and looked up as a string and not basing on index as
            browser can add support to some language breaking the order */
-
-        voice: el('voices').value,
-    };
-    window.localStorage.setItem('settings', JSON.stringify(settings));
+        voice: el('voices').value
+    }
 }
 
-function loadSettings() {
-    let settings = JSON.parse(window.localStorage.getItem('settings'));
+function saveSettings() {
+    window.localStorage.setItem('settings', JSON.stringify(getSettings()));
+}
+
+function applySettings(settings) {
     if (!settings || settings.version != settingsVersion)
         return;
     el('repetitions').value = settings.repetitions;
@@ -138,11 +150,41 @@ function loadSettings() {
             el('voices').selectedIndex = i;
 }
 
+function loadSettings() {
+    return applySettings(JSON.parse(window.localStorage.getItem('settings')))
+}
+
+function savePresetPressed() {
+    let presets = JSON.parse(window.localStorage.getItem('presets') || "{}");
+    presets[el('presetInput').value] = getSettings();
+    window.localStorage.setItem('presets', JSON.stringify(presets));
+    updateUi();
+}
+
+function startPresetPressed() {
+    let presets = JSON.parse(window.localStorage.getItem('presets') || "{}");
+    const selected_preset = el('presetInput').value;
+    if (presets.hasOwnProperty(selected_preset)) {
+        applySettings(presets[selected_preset])
+    }
+    startTalkingTimer();
+}
+
+function deletePresetPressed() {
+    let presets = JSON.parse(window.localStorage.getItem('presets') || "{}");
+    delete presets[el('presetInput').value];
+    window.localStorage.setItem('presets', JSON.stringify(presets));
+    updateUi();
+}
+
 window.onload = () => {
     populateVoices();
     initDefaults();
     loadSettings();
     el('start').onclick = startTalkingTimer;
     el('stop').onclick = stopTalkingTimer;
+    el('savePreset').onclick = savePresetPressed;
+    el('startPreset').onclick = startPresetPressed;
+    el('deletePreset').onclick = deletePresetPressed;
     updateUi();
 };

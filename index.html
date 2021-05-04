@@ -45,12 +45,26 @@
             </div>
             <div id="buttons" class="form-group">
                 <div>
-                    <button id="start" type="button" class="btn btn-default" disabled>Start</button>
-                    <button id="stop" type="button" class="btn btn-default" disabled>Stop</button>
+                    <button id="start" type="button" class="btn btn-default" disabled>▶️</button>
+                    <button id="stop" type="button" class="btn btn-default" disabled>⏹</button>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="presetInput">Presets:</label>
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" list="presetOptions" id="presetInput" placeholder="Name"
+                        class="col">
+                    <datalist id="presetOptions"></datalist>
+                </div>
+                <div class="col-auto">
+                    <button id="startPreset" type="button" class="btn btn-default" disabled class="col">▶️</button>
+                    <button id="savePreset" type="button" class="btn btn-default" class="col">Save</button>
+                    <button id="deletePreset" type="button" class="btn btn-default" class="col">Delete</button>
+                </div>
+            </div>
+        </div>
         </form>
-
         <div id="debugConsole" class="row">
         </div>
     </div>

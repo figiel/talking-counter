@@ -74,17 +74,23 @@ function timerTick(timerState) {
 function updateUi() {
     let timerIsRunning = currentTimer != null;
     el('start').disabled = timerIsRunning;
-    el('startPreset').disabled = el('start').disabled;
     el('stop').disabled = !timerIsRunning;
     if (!timerIsRunning && nosleep.isEnabled) {
         nosleep.disable();
     }
     let presets = JSON.parse(window.localStorage.getItem('presets') || "{}");
-    el('presetOptions').innerHTML='';
+    el('presetOptions').innerHTML = '';
+    el('presetStartButtons').innerHTML = '';
     for (let preset in presets) {
         if (!presets.hasOwnProperty(preset)) {
             continue;
         }
+        let load_preset_button = document.createElement('button');
+        load_preset_button.onclick = () => loadPresetPressed(preset);
+        load_preset_button.classList.add(['btn-default']);
+        load_preset_button.innerText = preset;
+        load_preset_button.disabled = timerIsRunning;
+        el('presetStartButtons').appendChild(load_preset_button);
         let new_option = document.createElement('option');
         new_option.value = preset;
         el('presetOptions').appendChild(new_option);
@@ -161,13 +167,13 @@ function savePresetPressed() {
     updateUi();
 }
 
-function startPresetPressed() {
+function loadPresetPressed(preset) {
     let presets = JSON.parse(window.localStorage.getItem('presets') || "{}");
-    const selected_preset = el('presetInput').value;
-    if (presets.hasOwnProperty(selected_preset)) {
-        applySettings(presets[selected_preset])
+    if (presets.hasOwnProperty(preset)) {
+        applySettings(presets[preset]);
     }
-    startTalkingTimer();
+    el('presetInput').value = preset;
+    return false;
 }
 
 function deletePresetPressed() {
@@ -184,7 +190,6 @@ window.onload = () => {
     el('start').onclick = startTalkingTimer;
     el('stop').onclick = stopTalkingTimer;
     el('savePreset').onclick = savePresetPressed;
-    el('startPreset').onclick = startPresetPressed;
     el('deletePreset').onclick = deletePresetPressed;
     updateUi();
 };
